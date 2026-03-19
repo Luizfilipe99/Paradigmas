@@ -1,0 +1,42 @@
+use std::io;
+
+fn verificar_senha(senha: &str) -> bool {
+    // Verifica o comprimento mínimo
+    if senha.len() < 10 {
+        return false;
+    }
+
+    let mut contagem_numeros = 0;
+    let mut tem_maiuscula = false;
+
+    // Itera sobre os caracteres da senha
+    for c in senha.chars() {
+        if c.is_digit(10) {
+            contagem_numeros += 1;
+        }
+        if c.is_ascii_uppercase() {
+            tem_maiuscula = true;
+        }
+    }
+
+    // Retorna true apenas se tiver >= 2 números e >= 1 maiúscula
+    contagem_numeros >= 2 && tem_maiuscula
+}
+
+fn main() {
+    loop {
+        let mut senha = String::new();
+        println!("Digite uma senha (min 10 chars, 2 numeros, 1 maiuscula):");
+        io::stdin().read_line(&mut senha).expect("Erro ao ler");
+        
+        // Trim para remover o \n do final da string digitada
+        let senha_limpa = senha.trim(); 
+
+        if verificar_senha(senha_limpa) {
+            println!("A senha é válida, seja bem vindo!");
+            break; // Sai do loop se a senha for válida
+        } else {
+            println!("Senha inválida. Tente novamente.\n");
+        }
+    }
+}
