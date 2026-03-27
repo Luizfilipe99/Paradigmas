@@ -1,0 +1,29 @@
+package main
+
+import "fmt"
+
+// Função que recebe string e retorna um bool e uma string 
+func ValidarUsuario(nome string) (bool, string) {
+	if len(nome) >= 8 {
+		return true, "Usuário criado com sucesso!" // 
+	}
+	return false, "Erro: O nome de usuário é muito curto" // 
+}
+
+func main() {
+	var usuario string
+
+	// Estilo While para pedir a entrada até que seja validada 
+	for {
+		fmt.Print("Digite um nome de usuário: ")
+		fmt.Scanln(&usuario)
+
+		status, mensagem := ValidarUsuario(usuario)
+		fmt.Println(mensagem)
+
+		// Exemplo de IF para validar a saída do loop
+		if status {
+			break
+		}
+	}
+}
