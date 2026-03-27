@@ -1,0 +1,26 @@
+package main
+
+import "fmt"
+
+func fibonacci(n int) { // 
+	// Declaração curta começando com 0 e 1 [cite: 47]
+	a, b := 0, 1 
+
+	// For loop para gerar os números [cite: 46]
+	for j := 0; j < n; j++ {
+		fmt.Printf("%d ", a)
+		// Sequência é formada somando-se os dois números anteriores 
+		proximo := a + b 
+		a = b
+		b = proximo
+	}
+	fmt.Println()
+}
+
+func main() {
+	var n int
+	fmt.Print("Quantos números da sequência de Fibonacci você quer exibir? ") // [cite: 49]
+	fmt.Scanln(&n)
+
+	fibonacci(n) // [cite: 50]
+}

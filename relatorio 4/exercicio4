@@ -1,0 +1,35 @@
+package main
+
+import "fmt"
+
+func verificarLogin(usuario, senha string) bool { // [cite: 54, 55]
+	// Estrutura if/else para verificar as credenciais 
+	if usuario == "senha" && senha == "admin" {
+		return true // 
+	} else {
+		return false // 
+	}
+}
+
+func main() {
+	var usuario, senha string
+
+	// For loop infinito 
+	for { 
+		fmt.Print("Digite o usuário: ")
+		fmt.Scanln(&usuario)
+		
+		fmt.Print("Digite a senha: ")
+		fmt.Scanln(&senha)
+
+		status := verificarLogin(usuario, senha) // 
+
+		// If para verificar o retorno da função [cite: 60]
+		if status { 
+			fmt.Println("Login bem-sucedido!") // [cite: 60]
+			break // [cite: 61]
+		} else {
+			fmt.Println("Usuário ou senha incorretos. Tente novamente.") // 
+		}
+	}
+}
