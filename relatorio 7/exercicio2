@@ -1,0 +1,35 @@
+public class Pokemon
+{
+    public string Especie { get; set; }
+
+    public Pokemon(string especie)
+    {
+        Especie = especie;
+    }
+
+    [cite_start]// Método virtual para permitir sobrescrita [cite: 63]
+    public virtual void ExecutarMovimento()
+    {
+        Console.WriteLine($"{Especie} está realizando um movimento genérico.");
+    }
+}
+
+public class TipoFogo : Pokemon
+{
+    public TipoFogo(string especie) : base(especie) { }
+
+    public override void ExecutarMovimento()
+    {
+        Console.WriteLine($"{Especie} lança uma rajada de chamas!");
+    }
+}
+
+public class TipoAgua : Pokemon
+{
+    public TipoAgua(string especie) : base(especie) { }
+
+    public override void ExecutarMovimento()
+    {
+        Console.WriteLine($"{Especie} dispara uma bolha de água!");
+    }
+}

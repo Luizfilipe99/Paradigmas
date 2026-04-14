@@ -1,0 +1,28 @@
+using System;
+
+public class CombatenteAliado
+{
+    // Atributos privados (Encapsulamento)
+    private string _nome;
+    private string _linhagem;
+    private string _patente;
+
+    [cite_start]// Construtor que obriga a inicialização [cite: 38, 53]
+    public CombatenteAliado(string nome, string linhagem, string patente)
+    {
+        _nome = nome;
+        _linhagem = linhagem;
+        _patente = patente;
+    }
+
+    public void ApresentarUnidade()
+    {
+        Console.WriteLine($"Unidade: {_nome} | Raça: {_linhagem} | Patente: {_patente}");
+    }
+}
+
+// No método Main:
+// CombatenteAliado c1 = new CombatenteAliado("Faramir", "Humano", "Capitão");
+// CombatenteAliado c2 = new CombatenteAliado("Gimli", "Anão", "Guerreiro");
+// c1.ApresentarUnidade();
+// c2.ApresentarUnidade();

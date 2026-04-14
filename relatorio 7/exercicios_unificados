@@ -1,0 +1,184 @@
+using System;
+using System.Collections.Generic;
+
+// ==========================================
+// EXERCÍCIO 1: ENCAPSULAMENTO E CONSTRUTORES
+// ==========================================
+
+public class CombatenteAliado
+{
+    // todo: ENCAPSULAMENTO
+    // Atributos privados para proteger os dados da unidade
+    private string _nome;
+    private string _linhagem;
+    private string _patente;
+
+    // todo: CONSTRUTOR
+    // Garante que todo combatente seja criado com dados válidos
+    public CombatenteAliado(string nome, string linhagem, string patente)
+    {
+        _nome = nome;
+        _linhagem = linhagem;
+        _patente = patente;
+    }
+
+    public void ApresentarUnidade()
+    {
+        Console.WriteLine($"[Gondor] Unidade: {_nome} | Raça: {_linhagem} | Patente: {_patente}");
+    }
+}
+
+// ==========================================
+// EXERCÍCIO 2: HERANÇA E POLIMORFISMO
+// ==========================================
+
+public class Pokemon
+{
+    public string Especie { get; set; }
+
+    public Pokemon(string especie)
+    {
+        Especie = especie;
+    }
+
+    // todo: VIRTUAL
+    // Permite que as classes filhas (TipoFogo, TipoAgua) definam seu próprio ataque
+    public virtual void ExecutarMovimento()
+    {
+        Console.WriteLine($"{Especie} prepara-se para lutar!");
+    }
+}
+
+public class TipoFogo : Pokemon
+{
+    public TipoFogo(string especie) : base(especie) { }
+
+    public override void ExecutarMovimento()
+    {
+        Console.WriteLine($"{Especie} utiliza: Lança-Chamas! 🔥");
+    }
+}
+
+public class TipoAgua : Pokemon
+{
+    public TipoAgua(string especie) : base(especie) { }
+
+    public override void ExecutarMovimento()
+    {
+        Console.WriteLine($"{Especie} utiliza: Hidro-Bomba! 💧");
+    }
+}
+
+// ==========================================
+// EXERCÍCIO 3: COMPOSIÇÃO E AGREGAÇÃO
+// ==========================================
+
+public class ReliquiaMagica
+{
+    public string NomeItem { get; set; }
+}
+
+public class BauDeReliquias
+{
+    private List<ReliquiaMagica> _reliquias = new List<ReliquiaMagica>();
+
+    public void GuardarItem(ReliquiaMagica item)
+    {
+        _reliquias.Add(item);
+        Console.WriteLine($"[Baú] Item '{item.NomeItem}' guardado com sucesso.");
+    }
+}
+
+public class Maga
+{
+    public string Nome { get; set; }
+
+    // todo: COMPOSIÇÃO
+    // O baú é criado internamente; se a Maga deixar de existir, o baú também deixa
+    public BauDeReliquias Bau { get; private set; }
+
+    // todo: AGREGAÇÃO
+    // O kit de acampamento existe fora da Maga e é apenas associado a ela
+    public List<string> KitAcampamento { get; set; }
+
+    public Maga(string nome, List<string> kitExterno)
+    {
+        Nome = nome;
+        Bau = new BauDeReliquias(); 
+        KitAcampamento = kitExterno;
+    }
+}
+
+// ==========================================
+// EXERCÍCIO 4: ABSTRAÇÃO
+// ==========================================
+
+// todo: CLASSE ABSTRATA
+// Serve apenas como molde; não pode ser instanciada diretamente
+public abstract class AbominacaoCosmica
+{
+    public string Nome { get; set; }
+
+    protected AbominacaoCosmica(string nome)
+    {
+        Nome = nome;
+    }
+
+    public abstract void Manifestar();
+}
+
+public class Shoggoth : AbominacaoCosmica
+{
+    public Shoggoth(string nome) : base(nome) { }
+
+    public override void Manifestar()
+    {
+        Console.WriteLine($"[{Nome}]: A massa de protoplasma arrasta-se borbulhando, moldando órgãos e olhos.");
+    }
+}
+
+public class CacadorAlado : AbominacaoCosmica
+{
+    public CacadorAlado(string nome) : base(nome) { }
+
+    public override void Manifestar()
+    {
+        Console.WriteLine($"[{Nome}]: A criatura bate as suas asas membranosas, mergulhando do vácuo estelar.");
+    }
+}
+
+// ==========================================
+// PROGRAMA PRINCIPAL
+// ==========================================
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("--- EXERCÍCIO 1: COMBATENTES ---");
+        CombatenteAliado c1 = new CombatenteAliado("Faramir", "Humano", "Capitão");
+        c1.ApresentarUnidade();
+
+        Console.WriteLine("\n--- EXERCÍCIO 2: POKÉMON (POLIMORFISMO) ---");
+        List<Pokemon> pokedex = new List<Pokemon>
+        {
+            new TipoFogo("Charizard"),
+            new TipoAgua("Blastoise")
+        };
+        // todo: POLIMORFISMO EM AÇÃO
+        foreach (var p in pokedex) { p.ExecutarMovimento(); }
+
+        Console.WriteLine("\n--- EXERCÍCIO 3: FRIEREN (ASSOCIAÇÕES) ---");
+        List<string> itensExternos = new List<string> { "Saco de Dormir", "Lampião" };
+        Maga frieren = new Maga("Frieren", itensExternos);
+        frieren.Bau.GuardarItem(new ReliquiaMagica { NomeItem = "Grimório de Flores" });
+
+        Console.WriteLine("\n--- EXERCÍCIO 4: HORROR CÓSMICO (ABSTRAÇÃO) ---");
+        List<AbominacaoCosmica> horrores = new List<AbominacaoCosmica>
+        {
+            new Shoggoth("Shoggoth Incipiente"),
+            new CacadorAlado("Caçador das Estrelas")
+        };
+        foreach (var h in horrores) { h.Manifestar(); }
+    }
+}

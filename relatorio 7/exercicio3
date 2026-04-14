@@ -1,0 +1,36 @@
+public class ReliquiaMagica
+{
+    public string NomeItem { get; set; }
+}
+
+public class BauDeReliquias
+{
+    private List<ReliquiaMagica> _reliquias = new List<ReliquiaMagica>();
+
+    public void GuardarItem(ReliquiaMagica item)
+    {
+        _reliquias.Add(item);
+        Console.WriteLine($"Relíquia '{item.NomeItem}' guardada no baú.");
+    }
+}
+
+public class ItemDeAcampamento
+{
+    public string Nome { get; set; }
+}
+
+public class Maga
+{
+    public string Nome { get; set; }
+    [cite_start]// Composição: O Baú nasce com a Maga [cite: 32, 83]
+    public BauDeReliquias Bau { get; private set; }
+    [cite_start]// Agregação: O Kit existe independente da Maga [cite: 28, 84]
+    public List<ItemDeAcampamento> KitAcampamento { get; set; }
+
+    public Maga(string nome, List<ItemDeAcampamento> kitExterno)
+    {
+        Nome = nome;
+        Bau = new BauDeReliquias(); 
+        KitAcampamento = kitExterno;
+    }
+}
