@@ -1,0 +1,50 @@
+# Composição
+class MicroondasTelefone
+  def ativar
+    puts "Banana Verde detectada! O Microondas-Telefone (nome provisório) está operando!"
+  end
+end
+
+# Agregação
+class Relatorio
+  attr_reader :nome_projeto, :autor
+
+  def initialize(nome_projeto, autor)
+    @nome_projeto = nome_projeto
+    @autor = autor
+  end
+end
+
+class LabRegistro
+  def initialize
+    # Composição: O objeto é instanciado e controlado por dentro da classe LabRegistro
+    @microondas = MicroondasTelefone.new
+    # Array vazio para guardar a Agregação
+    @registros = []
+  end
+
+  def adicionar_registro(nome_projeto, autor)
+    puts "\n[Iniciando Experimento]"
+    @microondas.ativar
+    
+    novo_relatorio = Relatorio.new(nome_projeto, autor)
+    @registros << novo_relatorio
+    puts "Relatório do projeto '#{nome_projeto}' salvo com sucesso!"
+  end
+
+  def listar_experimentos
+    puts "\n--- Relatórios Registrados ---"
+    @registros.each do |relatorio|
+      puts "-> Projeto: #{relatorio.nome_projeto} | Autor(a): #{relatorio.autor}"
+    end
+  end
+end
+
+# --- MAIN ---
+lab = LabRegistro.new
+
+lab.adicionar_registro("PhoneWave D-Mail", "Okabe Rintaro")
+lab.adicionar_registro("Time Leap Machine", "Makise Kurisu")
+lab.adicionar_registro("CERN Hack", "Itaru Hashida")
+
+lab.listar_experimentos

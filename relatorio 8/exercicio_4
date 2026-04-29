@@ -1,0 +1,73 @@
+module Localizavel
+  def local_atual
+    puts "#{@nome} encontra-se no local: #{@localizacao}"
+  end
+end
+
+module Perigoso
+  def exibir_ameaca
+    puts "[ALERTA] #{@nome} é altamente perigoso(a) e pode estar armado(a)!"
+  end
+end
+
+class Pessoa
+  attr_reader :nome, :localizacao
+
+  def initialize(nome, localizacao)
+    @nome = nome
+    @localizacao = localizacao
+  end
+end
+
+class Testemunha < Pessoa
+  include Localizavel
+end
+
+class Suspeito < Pessoa
+  include Localizavel
+  include Perigoso
+end
+
+class CenaDoCrime
+  def initialize
+    @pessoas_presentes = []
+  end
+
+  def adicionar_pessoa(pessoa)
+    @pessoas_presentes << pessoa
+  end
+
+  def listar_todos
+    puts "\n--- Investigação: Pessoas na Cena ---"
+    @pessoas_presentes.each do |pessoa|
+      # Usa o método injetado pelo módulo Localizavel
+      pessoa.local_atual 
+    end
+  end
+
+  def identificar_perigosos
+    puts "\n--- Investigação: Identificando Perigos ---"
+    
+    # Filtro com Introspecção
+    # Retorna apenas quem possuir o método exibir_ameaca
+    perigosos = @pessoas_presentes.select { |p| p.respond_to?(:exibir_ameaca) }
+    
+    perigosos.each do |p|
+      p.exibir_ameaca
+    end
+  end
+end
+
+# --- MAIN ---
+cena = CenaDoCrime.new
+
+t1 = Testemunha.new("John Watson", "Entrada principal")
+s1 = Suspeito.new("Professor Moriarty", "No escuro das sombras")
+s2 = Suspeito.new("Irene Adler", "Perto do cofre")
+
+cena.adicionar_pessoa(t1)
+cena.adicionar_pessoa(s1)
+cena.adicionar_pessoa(s2)
+
+cena.listar_todos
+cena.identificar_perigosos
